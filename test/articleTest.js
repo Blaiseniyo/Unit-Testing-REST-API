@@ -73,6 +73,18 @@ describe('# Auth testing block', () => {
       })
   })
 
+  it('It should not LOGIN a user without password', (done) => {
+    chai.request(app)
+    .post('/api/user/login')
+    .send({email:'faisaledgar@example.com'})
+    .end((err, res) => {
+        res.should.have.status(401);
+        res.body.should.be.a('object');
+        res.body.should.have.property('message').eql("auth failed")
+    done();
+    })
+})
+
   it('It should not LOGIN a user with a wrong password', (done) => {
     chai.request(app)
     .post('/api/user/login')
@@ -232,7 +244,7 @@ describe('Articles', () => {
         });
     });
 
-    it('it should not GET an article by the given id', (done) => {
+    it('it should not GET an article by bad id given', (done) => {
       chai.request(app)
       .get('/api/articles/'+"5fc6bee5d9d6aa3cf80de0")
       .end((err, res) => {
@@ -357,7 +369,7 @@ describe('# message testing block', () => {
     })
   })
 
-  it('It should a messages of a given Id', (done) => {
+  it('It should get a messages of a given Id', (done) => {
     chai.request(app)
     .get('/api/message/'+messageId)
     .set("authorization",`Bearer ${token}`)
@@ -369,7 +381,7 @@ describe('# message testing block', () => {
     })
   })
 
-  it('It should a messages of a given Id', (done) => {
+  it('It should not  get a messages of a wrong given Id', (done) => {
     chai.request(app)
     .get('/api/message/'+testId)
     .set("authorization",`Bearer ${token}`)
@@ -406,20 +418,71 @@ describe('# message testing block', () => {
     })
   })
 
-  it('It should not a update message of a wrong Id', (done) => {
-    let message={name:"Blaise niyo",email:"blaiseblog1233@gmail.com",message:"I have work for you, Are you interested now"}
+  // it('It should not a update message of a wrong Id', (done) => {
+  //   let message={name:"Blaise",email:"blaiseblog1233@gmail.com",message:"I have work for you, Are you in"}
+  //   chai.request(app)
+  //   .put('/api/message/'+"5fc6be")
+  //   .set("authorization",`Bearer ${token}`)
+  //   .send(message)
+  //   .end((err, res) => {
+  //       res.should.have.status(400)
+  //       res.body.should.be.a("object")
+  //       res.body.should.have.property("message").eql("you provided a bad Id to delete")
+  //       done()
+  //   })
+  // })
+
+  it('it should DELETE an message given the id', (done) => {
     chai.request(app)
-    .put('/api/message/'+"5fc6bee5d9d6aa3cf80de")
+    .delete('/api/message/' + messageId)
     .set("authorization",`Bearer ${token}`)
-    .send(message)
     .end((err, res) => {
-        res.should.have.status(500)
-        res.body.should.be.a("object")
-        res.body.should.have.property("error")
-        done()
-    })
+        res.should.have.status(200);
+        res.body.should.be.a('object');
+        res.body.should.have.property('ok').eql(1);
+        done();
+    });
+  });
+
+  it('it should not DELETE an message given a wrong id', (done) => {
+    chai.request(app)
+    .delete('/api/message/' + "5fc6bee5d9d6aa3cf80de0")
+    .set("authorization",`Bearer ${token}`)
+    .end((err, res) => {
+      res.should.have.status(500);
+      res.body.should.be.a('object');
+      done();
+    });
+
+});
+
+})
+
+
+
+describe('# URL test lock', () => {
+  
+  it('It should add a Access-Control-Allow-Methods on every header', (done) => {
+      chai.request(app)
+      .options('/api/')
+      .end((err, res) => {
+          res.should.have.status(200)
+          res.header.should.have.property("access-control-allow-origin")
+          res.body.should.be.a("object")
+          done()
+      })
   })
 
+  it('It should return a error if bad URL provided', (done) => {
+    chai.request(app)
+    .post('/worng')
+    .end((err, res) => {
+        res.should.have.status(404)
+        res.body.should.be.a("object")
+        res.body.should.have.property('error')
+        done()
+    })
+})
 
 })
 // describe("# Message testing",()=>{

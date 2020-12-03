@@ -84,10 +84,9 @@ const updateMessage =async(req,res,next)=>{
     try{
 
         const result = await Message.update({_id:id},{$set:req.body})
-        res.send(result)
+        return res.send(result)
     }
     catch(err){
-
         res.status(500).json({
             error:err
         })
