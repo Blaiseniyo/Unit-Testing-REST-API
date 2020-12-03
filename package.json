@@ -1,0 +1,36 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "creating a restAPI for my portfolio wesite(building a simple personal website)",
+  "main": "server.js",
+  "scripts": {
+    "test": "nyc  --reporter=html --reporter=text mocha --timeout 10000 --exit",
+    "coverage": "nyc  --reporter=html --reporter=text mocha test/*.js --timeout 10000" ,
+    "start": "SET process.env.NODE_ENV=dev && node server.js",
+    "dev": "SET process.env.NODE_ENV=dev && nodemon server.js"
+  },
+  "keywords": [
+    "node",
+    "restful",
+    "api"
+  ],
+  "author": "Niyonkuru Blaise",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.19.0",
+    "coveralls": "^3.1.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.15",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2",
+    "nyc": "^15.1.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.2.1"
+  }
+}
