@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "nyc  --reporter=html --reporter=text mocha --timeout 10000 --exit",
-    "coverage": "nyc  --reporter=html --reporter=text mocha test/*.js --timeout 10000" ,
+    "coveralls": "nyc  --reporter=html --reporter=text mocha test/*.js --timeout 10000" ,
     "start": "SET process.env.NODE_ENV=dev && node server.js",
     "dev": "SET process.env.NODE_ENV=dev && nodemon server.js"
   },
