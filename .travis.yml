@@ -1,7 +1,7 @@
 language: node_js
 install: npm install
 env:
-  - db_connection
+  - db_connection="mongodb+srv://Blaise:Blaise1...@cluster0.zxf6j.mongodb.net/portfolio?retryWrites=true&w=majority"
 node_js:
   - "stable"
 services:
