@@ -1,5 +1,6 @@
 const  mongoose  = require('mongoose');
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 
 // const getAllposts=((req,res,next)=>{
@@ -48,7 +49,8 @@ const getOnepost = async (req,res,next)=>{
         const id =req.params.postId;
         const post = await Post.findById(id);
         if(post){
-            res.send(post);
+            const comments= await Comment.find({postId:id}).select({"name":1,"comment":1,"_id":0})
+            res.send({post:post,comments:comments});
         }else{
             res.status(404).json({
                 message:'No valid Post for the provided ID'
