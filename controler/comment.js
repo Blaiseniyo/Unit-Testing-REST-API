@@ -31,7 +31,7 @@ const createNewcomment= ((req,res,next)=>{
         console.log(result);
         res.send(result);
     }).catch(err=>{
-        res.send({
+        res.status(500).send({
             error:err
         })
     });
